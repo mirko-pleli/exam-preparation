@@ -1,28 +1,28 @@
 package winter.praxis;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Praxis {
 
-  private List<Patient> patienten = new ArrayList<Patient>();
+  private List<Patient> patienten = new ArrayList<>();
 
-  private List<Behandlung> behandlungen = new ArrayList<Behandlung>();
+  private List<Behandlung> behandlungen = new ArrayList<>();
 
   public List<Patient> getPatient(String name) {
     return patienten
         .stream()
-        .filter(patient -> patient.getName().equals(name))
+        .filter(patient -> patient.getName()
+            .equals(name))
         .collect(Collectors.toList());
   }
 
   public List<Behandlung> getBehandlung(String kvNummer) {
     return behandlungen
         .stream()
-        .filter(behandlung -> behandlung.getKvNummer().equals(kvNummer))
+        .filter(behandlung -> behandlung.getKvNummer()
+            .equals(kvNummer))
         .collect(Collectors.toList());
   }
 
@@ -31,13 +31,11 @@ public class Praxis {
   }
 
   public String zeigePatienten(int anzBehandlungen) {
-    StringBuilder liste = new StringBuilder();
-    for(Patient patient : patienten) {
-      if(getBehandlungen(patient) >= anzBehandlungen) {
-        liste.append(patient.getName()).append("; ");
-      }
-    }
-    return liste.toString();
+   return patienten
+       .stream()
+       .filter(patient -> getBehandlung(patient.getKvNummer()).size() >= anzBehandlungen)
+       .map(Patient::getName)
+       .collect(Collectors.joining("; "));
   }
 
   public void addBehandlung(Behandlung behandlung) {
@@ -50,9 +48,5 @@ public class Praxis {
       summe += behandlung.getKosten();
     }
     return summe;
-  }
-
-  private int getBehandlungen(Patient patient) {
-    return anzBehandlungen(patient.getKvNummer());
   }
 }
