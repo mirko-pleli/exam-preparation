@@ -20,5 +20,28 @@ public class Spielwiese {
     textnachricht1.hinzufuegenLike();
 
     System.out.println(sozialesNetzwerk.getAlleNachrichten());
+    System.out.println(getPassword("Ich generiere mir ein neues Passwort"));
+  }
+
+  public static String getPassword(String satz) {
+    String[] sentence = satz.split(" ");
+    StringBuilder passwort = new StringBuilder();
+    char zeichen = ' ';
+    boolean isUpperCase = true;
+
+    for (String s : sentence) {
+      zeichen = s.charAt(0);
+      if (Character.isLetter(zeichen)) {
+        if (isUpperCase) {
+          zeichen = Character.toUpperCase(zeichen);
+          isUpperCase = false;
+        } else {
+          zeichen = Character.toLowerCase(zeichen);
+          isUpperCase = true;
+        }
+      }
+      passwort.append(zeichen);
+    }
+    return passwort.toString();
   }
 }
